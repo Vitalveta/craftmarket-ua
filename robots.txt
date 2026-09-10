@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://comforting-raindrop-d828de.netlify.app/sitemap.xml

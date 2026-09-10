@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Каталог — CraftMarket</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1a1d21;
+    --surface:#23262b;
+    --surface-2:#2b2f35;
+    --accent:#ff6a1a;
+    --accent-dim:#c9540f;
+    --steel:#5c85ab;
+    --text:#f5f3ef;
+    --muted:#9aa0a6;
+    --line:#34383e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(26,29,33,0.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk';font-weight:700;font-size:20px;text-decoration:none;color:var(--text);}
+  .logo-mark{width:30px;height:30px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono';font-size:13px;font-weight:500;color:#1a1d21;}
+  .nav a.cta{background:var(--accent);color:#1a1d21;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:500;font-size:14px;}
+  .nav a.cta:hover{background:#ff7f3d;}
+
+  .page-head{padding:56px 0 8px;}
+  .eyebrow{font-family:'IBM Plex Mono';font-size:13px;color:var(--accent);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:'';width:26px;height:1px;background:var(--accent);}
+  .page-head h1{font-size:38px;margin-bottom:12px;}
+  .page-head p{color:var(--muted);max-width:520px;font-size:15px;}
+
+  .filters{display:flex;gap:10px;padding:32px 0 0;flex-wrap:wrap;}
+  .filter-btn{
+    background:var(--surface);border:1px solid var(--line);color:var(--muted);
+    padding:9px 16px;border-radius:20px;font-size:13px;cursor:pointer;
+    font-family:'IBM Plex Mono';transition:all 0.15s;
+  }
+  .filter-btn:hover{border-color:var(--steel);color:var(--text);}
+  .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#1a1d21;}
+
+  .cat-section{padding:52px 0 8px;}
+  .cat-title{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--line);}
+  .cat-title h2{font-size:22px;}
+  .cat-title span{font-family:'IBM Plex Mono';font-size:12px;color:var(--muted);}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;transition:border-color 0.2s, transform 0.2s;}
+  .card:hover{border-color:var(--accent-dim);transform:translateY(-3px);}
+  .card-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;margin-bottom:16px;background:var(--surface-2);}
+  .card .brand{font-family:'IBM Plex Mono';font-size:11px;color:var(--steel);text-transform:uppercase;margin-bottom:10px;}
+  .card h3{font-size:16px;line-height:1.35;margin-bottom:10px;min-height:44px;}
+  .card p{font-size:13px;color:var(--muted);margin-bottom:16px;min-height:36px;}
+  .card-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;}
+  .price{font-family:'Space Grotesk';font-weight:700;font-size:19px;color:var(--accent);}
+  .price small{font-family:'IBM Plex Mono';font-weight:400;font-size:11px;color:var(--muted);}
+  .order-btn{font-family:'IBM Plex Mono';font-size:12px;color:var(--text);border:1px solid var(--line);padding:7px 12px;border-radius:6px;text-decoration:none;transition:border-color 0.15s;}
+  .order-btn:hover{border-color:var(--accent);}
+
+  .cta-band{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:44px;margin:64px 0;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cta-band h2{font-size:22px;max-width:420px;}
+  .cta-band p{color:var(--muted);margin-top:8px;max-width:420px;font-size:14px;}
+  .btn-primary{background:var(--accent);color:#1a1d21;padding:13px 24px;border-radius:6px;text-decoration:none;font-weight:500;font-size:14px;display:inline-block;}
+  .btn-primary:hover{background:#ff7f3d;}
+
+  footer{border-top:1px solid var(--line);padding:32px 0;}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-row p{color:var(--muted);font-size:13px;}
+  footer a{color:var(--steel);text-decoration:none;}
+
+  @media (max-width:820px){
+    .grid{grid-template-columns:1fr;}
+    .page-head h1{font-size:28px;}
+    .cta-band{padding:28px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html"><span class="logo-mark">CM</span> CraftMarket</a>
+    <a class="cta" href="https://t.me/craftmarket_ua" target="_blank">Написати в Telegram</a>
+  </div>
+</header>
+
+<div class="wrap page-head">
+  <div class="eyebrow">Каталог</div>
+  <h1>Товари в наявності</h1>
+  <p>Базові позиції з нашого асортименту. Повний прайс — за запитом у Telegram.</p>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">Все</button>
+    <button class="filter-btn" data-filter="wire">Дріт</button>
+    <button class="filter-btn" data-filter="electrodes">Електроди</button>
+    <button class="filter-btn" data-filter="abrasive">Абразив</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="cat-section" data-group="wire">
+    <div class="cat-title"><h2>Зварювальний дріт</h2><span>MAGMAWELD / MONOLITH · 18 позицій</span></div>
+    <div class="grid">
+      <div class="card"><img class="card-photo" src="images/product_1.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт MG-2 (СВ08Г2С) Ø0,8 мм</h3><p>Омідн., котушка 5 кг</p><div class="card-foot"><div class="price">133 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_2.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт MG-2 (СВ08Г2С) Ø0,8 мм</h3><p>Омідн., котушка 15 кг</p><div class="card-foot"><div class="price">123 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_3.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт MG-2 (СВ08Г2С) Ø1,0 мм</h3><p>Омідн., котушка 5 кг</p><div class="card-foot"><div class="price">130 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_4.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт MG-2 (СВ08Г2С) Ø1,0 мм</h3><p>Омідн., котушка 15 кг</p><div class="card-foot"><div class="price">115 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_5.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт MG-2 (СВ08Г2С) Ø1,2 мм</h3><p>Омідн., котушка 5 кг</p><div class="card-foot"><div class="price">127 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_6.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт MG-2 (СВ08Г2С) Ø1,2 мм</h3><p>Омідн., котушка 15 кг</p><div class="card-foot"><div class="price">112 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_7.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт MG-2 (СВ08Г2С) Ø1,6 мм</h3><p>Омідн., котушка 15 кг</p><div class="card-foot"><div class="price">112 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_8.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт MG-3 (СВ08Г2С) Ø1,2 мм</h3><p>Омідн., котушка 15 кг</p><div class="card-foot"><div class="price">112 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_9.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт SW-702 (K 435 PRE) Ø3,2 мм</h3><p>Порошковий, котушка 25 кг</p><div class="card-foot"><div class="price">112 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_10.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт SW-702 (K 435 PRE) Ø4,0 мм</h3><p>Порошковий, котушка 25 кг</p><div class="card-foot"><div class="price">112 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_11.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт TG-2 Ø1,6 мм</h3><p>Обміднений, тубус 5 кг</p><div class="card-foot"><div class="price">162 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_12.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт TG-2 Ø2,0 мм</h3><p>Обміднений, тубус 5 кг</p><div class="card-foot"><div class="price">162 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_13.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт TG-2 Ø3,2 мм</h3><p>Обміднений, тубус 5 кг</p><div class="card-foot"><div class="price">154 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_14.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт нерж. MI 307Si Ø1,0 мм</h3><p>Упаковка 15 кг</p><div class="card-foot"><div class="price">400 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_15.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт нерж. MI 307Si Ø1,2 мм</h3><p>Упаковка 15 кг</p><div class="card-foot"><div class="price">390 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_16.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт нерж. MI 308LSi Ø1,2 мм</h3><p>Упаковка 15 кг</p><div class="card-foot"><div class="price">463 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_17.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Дріт нерж. MI 308LSi Ø1,2 мм</h3><p>Упаковка 5 кг</p><div class="card-foot"><div class="price">478 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_18.jpg" alt="" loading="lazy"><div class="brand">Monolith</div><h3>Дріт ER-308 LSi Ø0,8 мм</h3><p>Нержавіючий, упаковка 5 кг</p><div class="card-foot"><div class="price">702 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+    </div>
+  </div>
+
+  <div class="cat-section" data-group="electrodes">
+    <div class="cat-title"><h2>Електроди</h2><span>рутилові / основне покриття · 18 позицій</span></div>
+    <div class="grid">
+      <div class="card"><img class="card-photo" src="images/product_19.jpg" alt="" loading="lazy"><div class="brand">Монолит</div><h3>Електроди МР-3 Ø3 мм</h3><p>Упаковка 2,5 кг</p><div class="card-foot"><div class="price">142 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_20.jpg" alt="" loading="lazy"><div class="brand">Монолит</div><h3>Електроди МР-3 Ø4 мм</h3><p>Упаковка 5 кг</p><div class="card-foot"><div class="price">138,4 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_21.jpg" alt="" loading="lazy"><div class="brand">Монолит</div><h3>Електроди МР-3 Ø5 мм</h3><p>Упаковка 5 кг</p><div class="card-foot"><div class="price">138,4 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_22.jpg" alt="" loading="lazy"><div class="brand">Монолит</div><h3>Електроди "Моноліт РЦ" Ø3 мм</h3><p>Тубус 2,5 кг</p><div class="card-foot"><div class="price">215,2 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_23.jpg" alt="" loading="lazy"><div class="brand">Монолит</div><h3>Електроди "Моноліт РЦ" Ø4 мм</h3><p>Упаковка 2,5 кг</p><div class="card-foot"><div class="price">210 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_24.jpg" alt="" loading="lazy"><div class="brand">Монолит</div><h3>Електроди "Моноліт РЦ" Ø4 мм</h3><p>Упаковка 5 кг</p><div class="card-foot"><div class="price">207,4 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_25.jpg" alt="" loading="lazy"><div class="brand">Арсенал</div><h3>Електроди АНО-21 Ø3 мм</h3><p>Упаковка 2,5 кг</p><div class="card-foot"><div class="price">141,6 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_26.jpg" alt="" loading="lazy"><div class="brand">Арсенал</div><h3>Електроди АНО-21 Ø4 мм</h3><p>Упаковка 5 кг</p><div class="card-foot"><div class="price">137,4 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_27.jpg" alt="" loading="lazy"><div class="brand">Continent</div><h3>Електроди АНО-36 Ø3 мм</h3><p>Упаковка 2,5 кг</p><div class="card-foot"><div class="price">140,4 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_28.jpg" alt="" loading="lazy"><div class="brand">Continent</div><h3>Електроди АНО-36 Ø4 мм</h3><p>Упаковка 5 кг</p><div class="card-foot"><div class="price">136,2 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_29.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Електроди ESB 48 Ø3,25 мм</h3><p>Аналог УОНІ 13/55, 2,5 кг</p><div class="card-foot"><div class="price">119 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_30.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Електроди ESB 48 Ø4,0 мм</h3><p>Аналог УОНІ 13/55, 5 кг</p><div class="card-foot"><div class="price">119 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_31.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Електроди ESR 11 Ø3,0 мм</h3><p>Картонна уп., 2,5 кг</p><div class="card-foot"><div class="price">147 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_32.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Електроди ESR 11 Ø4,0 мм</h3><p>Картонна уп., 2,5 кг</p><div class="card-foot"><div class="price">152 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_33.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Електроди ESR 11 BLUE Ø2,5 мм</h3><p>Аналог "Моноліт РЦ", 2,5 кг</p><div class="card-foot"><div class="price">165 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_34.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Електроди ESR 11 BLUE Ø3,0 мм</h3><p>Аналог "Моноліт РЦ", 2,5 кг</p><div class="card-foot"><div class="price">155 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_35.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Електроди ESR 11 BLUE Ø4,0 мм</h3><p>Аналог "Моноліт РЦ", 2,5 кг</p><div class="card-foot"><div class="price">152 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_36.jpg" alt="" loading="lazy"><div class="brand">Magmaweld</div><h3>Електроди EI 347 Ø2,5 мм</h3><p>Для нержавіючих сталей, 1,75 кг</p><div class="card-foot"><div class="price">740 грн <small>/кг</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+    </div>
+  </div>
+
+  <div class="cat-section" data-group="abrasive">
+    <div class="cat-title"><h2>Абразивний інструмент</h2><span>LT · відрізні та шліфувальні круги · 18 позицій</span></div>
+    <div class="grid">
+      <div class="card"><img class="card-photo" src="images/product_37.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг відрізний по металу 125×1,0 мм</h3><p>Ø зовн./внутр. 125/22,2 мм</p><div class="card-foot"><div class="price">18,8 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_38.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг відрізний по металу 125×1,2 мм</h3><p>Ø зовн./внутр. 125/22,2 мм</p><div class="card-foot"><div class="price">20,7 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_39.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг відрізний по металу 125×1,6 мм</h3><p>Ø зовн./внутр. 125/22,2 мм</p><div class="card-foot"><div class="price">21,9 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_40.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг відрізний по металу 150×1,6 мм</h3><p>Ø зовн./внутр. 150/22,2 мм</p><div class="card-foot"><div class="price">32,2 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_41.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг відрізний по металу 180×1,6 мм</h3><p>Ø зовн./внутр. 180/22,2 мм</p><div class="card-foot"><div class="price">37,7 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_42.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг відрізний по металу 180×2,0 мм</h3><p>Ø зовн./внутр. 180/22,2 мм</p><div class="card-foot"><div class="price">37,3 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_43.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг відрізний по металу 230×2,0 мм</h3><p>Ø зовн./внутр. 230/22,2 мм</p><div class="card-foot"><div class="price">58,7 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_44.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг відрізний по металу 230×2,5 мм</h3><p>Ø зовн./внутр. 230/22,2 мм</p><div class="card-foot"><div class="price">56,9 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_45.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг шліфувальний 125×6,0 мм</h3><p>Ø зовн./внутр. 125/22,2 мм</p><div class="card-foot"><div class="price">38,2 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_46.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг шліфувальний зачисний 150×6,0 мм</h3><p>Ø зовн./внутр. 150/22,2 мм</p><div class="card-foot"><div class="price">55,2 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_47.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг шліфувальний зачисний 180×6,0 мм</h3><p>Ø зовн./внутр. 180/22,2 мм</p><div class="card-foot"><div class="price">68 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_48.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг шліфувальний зачисний 230×6,0 мм</h3><p>Ø зовн./внутр. 230/22,2 мм</p><div class="card-foot"><div class="price">106,3 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_49.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг пелюстковий торцевий P36</h3><p>Ø 125×22,23 мм</p><div class="card-foot"><div class="price">29,3 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_50.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг пелюстковий торцевий P40</h3><p>Ø 125×22,23 мм</p><div class="card-foot"><div class="price">28,4 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_51.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг пелюстковий торцевий P60</h3><p>Ø 125×22,23 мм</p><div class="card-foot"><div class="price">27,1 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_52.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг пелюстковий торцевий P80</h3><p>Ø 125×22,23 мм</p><div class="card-foot"><div class="price">31,6 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_53.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг пелюстковий торцевий P100</h3><p>Ø 125×22,23 мм</p><div class="card-foot"><div class="price">33,2 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+      <div class="card"><img class="card-photo" src="images/product_54.jpg" alt="" loading="lazy"><div class="brand">LT</div><h3>Круг пелюстковий торцевий P120</h3><p>Ø 125×22,23 мм</p><div class="card-foot"><div class="price">28,6 грн <small>/шт</small></div><a class="order-btn" href="https://t.me/craftmarket_ua" target="_blank">Замовити</a></div></div>
+    </div>
+  </div>
+
+  <div class="cta-band">
+    <div>
+      <h2>Не знайшли потрібну позицію?</h2>
+      <p>У нас понад 1000+ товарів у повному прайсі. Напишіть у Telegram — підберемо і надішлемо ціну.</p>
+    </div>
+    <a class="btn-primary" href="https://t.me/craftmarket_ua" target="_blank">Написати в Telegram →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap foot-row">
+    <p>© 2026 CraftMarket. Зварювальні матеріали та абразивний інструмент.</p>
+    <p><a href="https://t.me/craftmarket_ua" target="_blank">t.me/craftmarket_ua</a></p>
+  </div>
+</footer>
+
+<script>
+  var buttons = document.querySelectorAll('.filter-btn');
+  var sections = document.querySelectorAll('.cat-section');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      buttons.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.getAttribute('data-filter');
+      sections.forEach(function(sec){
+        sec.style.display = (f === 'all' || sec.getAttribute('data-group') === f) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
